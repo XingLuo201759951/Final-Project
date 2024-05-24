@@ -122,3 +122,10 @@ plt.title('Monthly Crime and Average Temperature in Leeds', fontsize=10)
 
 # Displays the plot
 plt.show()
+```
+## Discussion
+From the results of the data analysis, it shows that crime in Leeds does not show a clear seasonal pattern, nor is it directly related to seasonal climatic conditions.
+
+# Further Visualization
+The results of the previous analysis showed that crime in Leeds is not seasonal, so we analyzed it again in terms of the type of crime and looked for entry points to reduce the crime rate, mapping with spatial data[3] from Leeds.
+## Geographical Data Preparation
