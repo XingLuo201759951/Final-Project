@@ -145,3 +145,73 @@ From the results of the data analysis, it shows that crime in Leeds does not sho
 # Further Visualization
 The results of the previous analysis showed that crime in Leeds is not seasonal, so we analyzed it again in terms of the type of crime and looked for entry points to reduce the crime rate, mapping with spatial data[3] from Leeds.
 ## Geographical Data Preparation
+```# Processing of spatial data，data downloaded from https://geoportal.statistics.gov.uk/maps/761ecd09b4124843b95511a242e2b1a1
+leeds_shp =gpd.read_file('.../data/Leeds.geojson')
+# Familiar with data
+leeds_shp.head()
+
+# Explore the spatial dataframe
+leeds_shp.explore()
+
+# join the crime data to the leeds_shp geodataframe using a lefthand join, on the common ID 'LSOA21CD'/'LSOA code[5]
+leeds_crime =leeds_shp.merge(crime_leeds, how='left',left_on='LSOA21CD',right_on='LSOA code')
+# Check if the data was joint successfully
+leeds_crime.columns
+leeds_crime
+```
+##  Maping the distribution for Crime in Leeds
+### Statistics on different types of crime in Leeds
+```
+crime_count2 = crime_leeds.groupby('Crime type')["LSOA code"].count().rename('count').reset_index()
+# Check Statistics
+crime_count2
+# Visualize the number of different types of crimes to consider next steps in the analysis
+# Setting image specifications
+fig =plt.figure(1,(6,4),dpi = 300)
+ax =plt.subplot(111)
+plt.sca(ax)
+
+# Production of graph with type of crime on the horizontal axis and statistical data on the vertical axis
+plt.plot(crime_count2['Crime type'],crime_count2['count'],'k-',crime_count2['Crime type'],crime_count2['count'],'r.',linewidth=1.5, markersize=5)
+plt.xticks(rotation='vertical')
+plt.bar(crime_count2['Crime type'],crime_count2['count'],width=0.3)
+plt.title('Crime Count in Leeds',fontsize=15)
+plt.ylim(0,47000)
+
+# Displays the plot
+plt.show()
+```
+### As can be seen from the graph, the largest number of cases in Leeds is Voilence and Sexual Offences, which is further analyzed in terms of spatial distribution.
+```
+# Extraction of Voilence and Sexual Offences crime data for Leeds
+VASO_leeds = crime_leeds[(crime_leeds['Crime type'].str.contains('Violence and sexual offences'))]
+# Check data
+VASO_leeds
+# join the VASO data to the leeds_shp geodataframe using a lefthand join, on the common ID 'LSOA21CD'/'lsoa21cd'
+leeds_VASO =leeds_shp.merge(VASO_leeds, how='left',left_on='LSOA21CD',right_on='LSOA code')
+# Check if data jiont successlly
+leeds_VASO.columns
+# statistical Voilence and Sexual Offences crimes data
+VASO_count = leeds_VASO
+VASO_count['count']=1
+# counting the number of rows in each group and saving the results to VASO_count
+VASO_count = VASO_count.groupby(['LSOA21CD'])['count'].count().reset_index()
+VASO_count
+# Add the statistics to the leeds_VASO dateframe
+leeds_VASO = leeds_VASO.merge(VASO_count,how='left',left_on='LSOA21CD',right_on='LSOA21CD', suffixes=('', '_VASO'))
+# Check data
+leeds_VASO
+```
+## Mapping distribution of Violence and Sexual Offences Crimes in Leeds
+```#creates a figure and axes object using Matplotlib with a specified size of 15 inches in width and 12 inches in height
+fig, ax = plt.subplots(figsize=(15, 12))
+# plots the data from the leeds_VASO DataFrame, specifically the column 'count_VASO', which likely represents the count of violence and sexual offences crimes
+leeds_VASO.plot(column='count_VASO', legend=True, cmap='OrRd', ax=ax, vmin=0, vmax=400)
+# turn off the axis labels and ticks
+plt.axis('off')
+# Set title
+plt.title('Violence and Sexual Offences Crimes Distribution in Leeds')
+
+# Displays the plot
+plt.show()
+```
