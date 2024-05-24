@@ -10,3 +10,24 @@ To get the data in the right shape, there are 4 main steps to take:
 3.Normalize the data: exploring and cleaning data.
 4.Set the dataframe date index: Setting our date column to be the index of the pandas dataframe allows for an easier setup when using the visualize fuction. 
 The code for these four steps is as follows: 
+
+'python #read in required packages
+import pandas as pd
+import numpy as np
+import geopandas as gpd
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import seaborn as sns
+#set seaborn plotting theme to white
+sns.set_theme(style="white")
+#read crime data[1], data downloaded from https://www.police.uk/pu/your-area/west-yorkshire-police/leeds-city?tab=CrimeMap
+crime = pd.read_csv('.../data/crime.csv')
+#familiar with data
+crime.head()
+#Found that the column name is not automatically recognized, manually set the column name
+crime.columns = ['Crime ID', 'Month', 'Reported by',	'Falls within',	'Longitude',	'Latitude',	'Location',	'LSOA code',	'LSOA name',	'Crime type',	'Last outcome category',	'Context']
+#Delete the first line that is not automatically recognized as a title bar
+crime = crime.iloc[1:].reset_index(drop=True)
+crime.info()
+#Found no content in the contant column, delete it
+crime = crime.drop('Context', axis=1)
