@@ -3,6 +3,13 @@ Crime has always been a concern in this society, as it relates to the safety of 
 # Dataset
 The data used in this project are crime recording data and monthly average temperature data for Leeds for a total of 12 months from April 2023 to March 2024, as well as geographic coordinates for Leeds
 Reading Data Use the pandas.read_csv function to read data into a pandas data frame.
+
+Crime data downloaded from downloaded https://www.police.uk/pu/your-area/west-yorkshire-police/leeds-city?tab=CrimeMap
+
+Monthly temperature data downloaded from https://www.metoffice.gov.uk/hadobs/hadcet/data/meantemp_monthly_totals.txt
+
+Geographical data downloaded from https://geoportal.statistics.gov.uk/maps/761ecd09b4124843b95511a242e2b1a1tab=CrimeMap
+
 # Initial Visualization
 ## Data Load and Processing
 To get the data in the right shape, there are 4 main steps to take:
@@ -23,13 +30,18 @@ import seaborn as sns
 sns.set_theme(style="white")
 #read crime data[1], data downloaded from https://www.police.uk/pu/your-area/west-yorkshire-police/leeds-city?tab=CrimeMap
 crime = pd.read_csv('.../data/crime.csv')
-#familiar with data
+```
+### familiar with data
+```
 crime.head()
 #Found that the column name is not automatically recognized, manually set the column name
 crime.columns = ['Crime ID', 'Month', 'Reported by',	'Falls within',	'Longitude',	'Latitude',	'Location',	'LSOA code',	'LSOA name',	'Crime type',	'Last outcome category',	'Context']
 #Delete the first line that is not automatically recognized as a title bar
 crime = crime.iloc[1:].reset_index(drop=True)
 crime.info()
+```
+### Data Cleaning
+```
 #Found no content in the contant column, delete it
 crime = crime.drop('Context', axis=1)
 # Check for duplicate lines
