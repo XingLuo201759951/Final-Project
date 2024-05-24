@@ -215,3 +215,14 @@ plt.title('Violence and Sexual Offences Crimes Distribution in Leeds')
 # Displays the plot
 plt.show()
 ```
+### Discussion
+The map shows that there is a high spatial concentration of Violence and Sexual Offences crimes in Leeds, and these areas of concentrated crime need to be better regulated.
+
+# Conclusion
+Through the analysis of crime data in Leeds, it can be concluded that crime in Leeds does not exhibit strong seasonality. Issues related to violence and sexual offences are prevalent and show a clear pattern of concentration, indicating that they deserve particular attention. Based on the results of the data analysis, the following recommendations are proposed for reducing the crime rate in Leeds:
+
+1.Increase police presence and patrols in areas with high incidence of violence and sexual offences to deter criminal activities and improve public safety.
+
+2.Implement community outreach programs and initiatives to raise awareness about crime prevention strategies and encourage residents to report suspicious activities to law enforcement.
+
+3.Enhance cooperation and collaboration between law enforcement agencies, community organizations, and local residents to develop targeted interventions and support mechanisms for at-risk individuals and communities.
