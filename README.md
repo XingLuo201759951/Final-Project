@@ -31,7 +31,7 @@ sns.set_theme(style="white")
 #read crime data[1], data downloaded from https://www.police.uk/pu/your-area/west-yorkshire-police/leeds-city?tab=CrimeMap
 crime = pd.read_csv('.../data/crime.csv')
 ```
-### familiar with data
+### Familiar with data
 ```
 crime.head()
 #Found that the column name is not automatically recognized, manually set the column name
@@ -84,18 +84,22 @@ crime_leeds
 ## Data Visualisation of Relationship between Crime and Temperature
 Then we can start making visualizations.First, by visualizing and analyzing the temporal nature of the Leeds crime data and whether it is climate related or not.
 The code for these four steps is as follows:
+### Count Variables
 ```# Count different types of crime in Leeds
 crime_count = crime_leeds.groupby('Month')["Crime type"].count().rename('count').reset_index()
 # Check data
 crime_count
+```
+### Convert Data Type
+```
 #As a seasonality reference, import the average temperature data[2] of Leeds from April 2023 to March 2024 as a basis for making seasonal judgments,data downloaded from https://www.metoffice.gov.uk/hadobs/hadcet/data/meantemp_monthly_totals.txt
 monthly_temp = pd.read_csv('.../data/Monthly_Temperature.csv')
 monthly_temp.info()
 crime_count['Month'] = pd.to_datetime(crime_count['Month'], format='%Y-%m')
 monthly_temp['Month'] = pd.to_datetime(monthly_temp['Month'], format='%Y-%m')
-
-# Visualizing Leeds' crime data in a time series and create line-bar charts to better visualize the changes in the time series.
-
+```
+### Visualizing Leeds' crime data in a time series and create line-bar charts to better visualize the changes in the time series.
+```
 # Creates a new figure with a figure number of 1, a size of 6x4 inches, and a resolution of 300 dots per inch (dpi)
 fig =plt.figure(1,(6,4),dpi = 300)
 # Creates a subplot (axes) in the figure with one row, one column, and an index of 1. This will be the primary subplot.
